@@ -97,23 +97,24 @@ func Main() int {
 
 // Invocation contains the args for invoking a run of Mage.
 type Invocation struct {
-	Debug      bool          // turn on debug messages
-	Dir        string        // directory to read magefiles from
-	Force      bool          // forces recreation of the compiled binary
-	Verbose    bool          // tells the magefile to print out log statements
-	List       bool          // tells the magefile to print out a list of targets
-	Help       bool          // tells the magefile to print out help for a specific target
-	Keep       bool          // tells mage to keep the generated main file after compiling
-	Timeout    time.Duration // tells mage to set a timeout to running the targets
-	CompileOut string        // tells mage to compile a static binary to this path, but not execute
-	GOOS       string        // sets the GOOS when producing a binary with -compileout
-	GOARCH     string        // sets the GOARCH when producing a binary with -compileout
-	Stdout     io.Writer     // writer to write stdout messages to
-	Stderr     io.Writer     // writer to write stderr messages to
-	Stdin      io.Reader     // reader to read stdin from
-	Args       []string      // args to pass to the compiled binary
-	GoCmd      string        // the go binary command to run
-	CacheDir   string        // the directory where we should store compiled binaries
+	Debug              bool          // turn on debug messages
+	Dir                string        // directory to read magefiles from
+	Force              bool          // forces recreation of the compiled binary
+	Verbose            bool          // tells the magefile to print out log statements
+	List               bool          // tells the magefile to print out a list of targets
+	Help               bool          // tells the magefile to print out help for a specific target
+	Keep               bool          // tells mage to keep the generated main file after compiling
+	Timeout            time.Duration // tells mage to set a timeout to running the targets
+	CompileOut         string        // tells mage to compile a static binary to this path, but not execute
+	GOOS               string        // sets the GOOS when producing a binary with -compileout
+	GOARCH             string        // sets the GOARCH when producing a binary with -compileout
+	Stdout             io.Writer     // writer to write stdout messages to
+	Stderr             io.Writer     // writer to write stderr messages to
+	Stdin              io.Reader     // reader to read stdin from
+	Args               []string      // args to pass to the compiled binary
+	GoCmd              string        // the go binary command to run
+	CacheDir           string        // the directory where we should store compiled binaries
+	CustomGOBuildFlags string
 }
 
 // ParseAndRun parses the command line, and then compiles and runs the mage
@@ -182,7 +183,7 @@ func Parse(stderr, stdout io.Writer, args []string) (inv Invocation, cmd Command
 	fs.StringVar(&inv.GoCmd, "gocmd", mg.GoCmd(), "use the given go binary to compile the output")
 	fs.StringVar(&inv.GOOS, "goos", "", "set GOOS for binary produced with -compile")
 	fs.StringVar(&inv.GOARCH, "goarch", "", "set GOARCH for binary produced with -compile")
-
+	fs.StringVar(&inv.CustomGOBuildFlags, "bflags", "", "set the custom go build flags for binary produced with -compile")
 	// commands below
 
 	fs.BoolVar(&inv.List, "l", false, "list mage targets in this directory")
@@ -221,6 +222,7 @@ Options:
             use the given go binary to compile the output (default: "go")
   -goos     sets the GOOS for the binary created by -compile (default: current OS)
   -goarch   sets the GOARCH for the binary created by -compile (default: current arch)
+  -bflags   sets the custom Go build flags for the binary created by -compile
   -t <string>
             timeout in duration parsable format (e.g. 5m30s)
   -v        show verbose output when running mage targets
@@ -390,7 +392,7 @@ func Invoke(inv Invocation) int {
 		defer os.RemoveAll(main)
 	}
 	files = append(files, main)
-	if err := Compile(inv.GOOS, inv.GOARCH, inv.Dir, inv.GoCmd, exePath, files, inv.Debug, inv.Stderr, inv.Stdout); err != nil {
+	if err := Compile(inv.GOOS, inv.GOARCH, inv.CustomGOBuildFlags, inv.Dir, inv.GoCmd, exePath, files, inv.Debug, inv.Stderr, inv.Stdout); err != nil {
 		errlog.Println("Error:", err)
 		return 1
 	}
@@ -483,7 +485,7 @@ func Magefiles(magePath, goos, goarch, goCmd string, stderr io.Writer, isDebug b
 }
 
 // Compile uses the go tool to compile the files into an executable at path.
-func Compile(goos, goarch, magePath, goCmd, compileTo string, gofiles []string, isDebug bool, stderr, stdout io.Writer) error {
+func Compile(goos, goarch, customBuildFlags, magePath, goCmd, compileTo string, gofiles []string, isDebug bool, stderr, stdout io.Writer) error {
 	debug.Println("compiling to", compileTo)
 	debug.Println("compiling using gocmd:", goCmd)
 	if isDebug {
@@ -498,8 +500,14 @@ func Compile(goos, goarch, magePath, goCmd, compileTo string, gofiles []string, 
 	for i := range gofiles {
 		gofiles[i] = filepath.Base(gofiles[i])
 	}
-	debug.Printf("running %s build -o %s %s", goCmd, compileTo, strings.Join(gofiles, " "))
-	c := exec.Command(goCmd, append([]string{"build", "-o", compileTo}, gofiles...)...)
+	var c *exec.Cmd
+	if customBuildFlags != "" {
+		debug.Printf("running %s build -o %s %s %s", goCmd, compileTo, customBuildFlags, strings.Join(gofiles, " "))
+		c = exec.Command(goCmd, append([]string{"build", "-o", compileTo, customBuildFlags}, gofiles...)...)
+	} else {
+		debug.Printf("running %s build -o %s %s", goCmd, compileTo, strings.Join(gofiles, " "))
+		c = exec.Command(goCmd, append([]string{"build", "-o", compileTo}, gofiles...)...)
+	}
 	c.Env = environ
 	c.Stderr = stderr
 	c.Stdout = stdout
