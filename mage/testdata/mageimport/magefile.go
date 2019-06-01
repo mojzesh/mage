@@ -13,9 +13,9 @@ import (
 	"fmt"
 
 	// mage:import
-	_ "github.com/magefile/mage/mage/testdata/mageimport/subdir1"
+	_ "github.com/mojzesh/mage/mage/testdata/mageimport/subdir1"
 	// mage:import zz
-	"github.com/magefile/mage/mage/testdata/mageimport/subdir2"
+	"github.com/mojzesh/mage/mage/testdata/mageimport/subdir2"
 )
 
 var Aliases = map[string]interface{}{

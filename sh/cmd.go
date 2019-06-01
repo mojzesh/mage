@@ -9,7 +9,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/magefile/mage/mg"
+	"github.com/mojzesh/mage/mg"
 )
 
 // RunCmd returns a function that will call Run with the given command. This is

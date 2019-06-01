@@ -4,7 +4,7 @@ weight = 30
 +++
 
 Mage supports a makefile-style tree of dependencies using the helper library
-[github.com/magefile/mage/mg](https://godoc.org/github.com/magefile/mage/mg). To
+[github.com/mojzesh/mage/mg](https://godoc.org/github.com/mojzesh/mage/mg). To
 declare dependencies, pass any number of dependent functions of the following
 types:
 ```go

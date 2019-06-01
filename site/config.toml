@@ -10,7 +10,7 @@ defaultContentLanguageInSubdir= true
 	blog = "/blog/:year/:month/:filename/"
 
 [params]
-  editURL = "https://github.com/magefile/mage/edit/master/site/content/"
+  editURL = "https://github.com/mojzesh/mage/edit/master/site/content/"
   description = "Mage"
   author = "Nate Finch"
   showVisitedLinks = true
@@ -27,7 +27,7 @@ languageName = "English"
 [[Languages.en.menu.shortcuts]] 
 name = "<i class='fa fa-github'></i> Github repo"
 # identifier = "ds"
-url = "https://github.com/magefile/mage"
+url = "https://github.com/mojzesh/mage"
 weight = 10
 
 [[Languages.en.menu.shortcuts]] 

@@ -23,8 +23,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/magefile/mage/internal"
-	"github.com/magefile/mage/mg"
+	"github.com/mojzesh/mage/internal"
+	"github.com/mojzesh/mage/mg"
 )
 
 const testExeEnv = "MAGE_TEST_STRING"

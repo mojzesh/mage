@@ -6,7 +6,7 @@ author = "Nate Finch"
 authorLink = "twitter.com/natethefinch"
 +++
 
-[Mage v1.4.0](https://github.com/magefile/mage/releases/tag/v1.4.0) is released
+[Mage v1.4.0](https://github.com/mojzesh/mage/releases/tag/v1.4.0) is released
 with proper go modules support.
 
 I finally figured out the wacky problem that Mage was having with Go Modules.

@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/magefile/mage/internal"
+	"github.com/mojzesh/mage/internal"
 )
 
 const importTag = "mage:import"

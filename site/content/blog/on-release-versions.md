@@ -17,9 +17,9 @@ newest release is, even if it "looks" like it's an earlier release.
 The reason for this is two things: the major motivating factor is go modules
 support.  To enable support for go modules, if you are on version 2 or higher of
 your code, then import paths need to be appended with /v2.  i.e. to import
-github.com/magefile/mage/mg from a v2 tag, you'd write the import as `import
-"github.com/magefile/mage/v2"`.  With a go.mod that declares the module to be
-`github.com/magefile/mage/v2`, the go 1.11 tool understands that the /v2 on the
+github.com/mojzesh/mage/mg from a v2 tag, you'd write the import as `import
+"github.com/mojzesh/mage/v2"`.  With a go.mod that declares the module to be
+`github.com/mojzesh/mage/v2`, the go 1.11 tool understands that the /v2 on the
 end is not a real subdirectory, but just references the version of the module,
 and it'll strip that off.  This understanding was backported to go 1.10.3 and go
 1.9.7.  But any other versions of the go tool earlier than 1.11 will expect

@@ -16,15 +16,15 @@ and above (possibly even lower versions, but they're not regularly tested).
 **Using GOPATH**
 
 ```
-go get -u -d github.com/magefile/mage
-cd $GOPATH/src/github.com/magefile/mage
+go get -u -d github.com/mojzesh/mage
+cd $GOPATH/src/github.com/mojzesh/mage
 go run bootstrap.go
 ```
 
 **Using Go Modules**
 
 ```
-git clone https://github.com/magefile/mage
+git clone https://github.com/mojzesh/mage
 cd mage
 go run bootstrap.go
 ```
@@ -32,14 +32,14 @@ go run bootstrap.go
 This will download the code and then run the bootstrap script to build mage with
 version infomation embedded in it.  A normal `go get` (without -d) or `go
 install` will build the binary correctly, but no version info will be embedded.
-If you've done this, no worries, just go to `$GOPATH/src/github.com/magefile/mage`
+If you've done this, no worries, just go to `$GOPATH/src/github.com/mojzesh/mage`
 and run `mage install` or `go run bootstrap.go` and a new binary will be created
 with the correct version information.
 
 The mage binary will be created in your $GOPATH/bin directory.
 
 You may also install a binary release from our
-[releases](https://github.com/magefile/mage/releases) page.
+[releases](https://github.com/mojzesh/mage/releases) page.
 
 ## Demo
 
@@ -55,7 +55,7 @@ for discussion of usage, development, etc.
 
 see [magefile.org](https://magefile.org) for full docs
 
-see [godoc.org/github.com/magefile/mage/mage](https://godoc.org/github.com/magefile/mage/mage) for how to use mage as a library.
+see [godoc.org/github.com/mojzesh/mage/mage](https://godoc.org/github.com/mojzesh/mage/mage) for how to use mage as a library.
 
 # Why?
 

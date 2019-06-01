@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/magefile/mage/mg"
+	"github.com/mojzesh/mage/mg"
 )
 
 // This should work as a default - even if it's in a different file

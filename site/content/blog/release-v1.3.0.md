@@ -8,7 +8,7 @@ aliases = ["/blog/2018/09/release-1.3.0/"]
 +++
 
 As Brad Fitzpatrick would say, [Mage
-1.3.0](https://github.com/magefile/mage/releases/tag/v1.3.0) is the best release
+1.3.0](https://github.com/mojzesh/mage/releases/tag/v1.3.0) is the best release
 of Mage ever! This comes quick on the heels of gophercon, so I have been
 motivated to move some interesting new features through.  1.2.4 added real
 support for go modules (though it needs some more polish).  This release adds a
@@ -53,5 +53,5 @@ again, this can help figure out when you're not running what you think you're
 running.
 
 Hope this is useful to some people.  Please feel free to drop by the repo and
-[make an issue](https://github.com/magefile/mage/issues) if you have an idea of
+[make an issue](https://github.com/mojzesh/mage/issues) if you have an idea of
 something that could make Mage even better.

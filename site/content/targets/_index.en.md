@@ -72,7 +72,7 @@ exported named type of type `mg.Namespace`.  Then, every method on that type whi
 matches the normal target signature becomes a target under that namespace.
 
 ```go
-import "github.com/magefile/mage/mg"
+import "github.com/mojzesh/mage/mg"
 
 type Build mg.Namespace
 

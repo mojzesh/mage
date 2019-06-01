@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/magefile/mage/mg"
+	"github.com/mojzesh/mage/mg"
 )
 
 // Returns a non-nil error.
