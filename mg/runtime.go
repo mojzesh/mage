@@ -1,6 +1,7 @@
 package mg
 
 import (
+	"context"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -73,3 +74,12 @@ func CacheDir() string {
 
 // Namespace allows for the grouping of similar commands
 type Namespace struct{}
+
+// GetFlagsFromContext - Helper function
+// for extracting flags from context of a target
+func GetFlagsFromContext(ctx context.Context) []string {
+	if ctx != nil && ctx.Value("flags") != nil {
+		return ctx.Value("flags").([]string)
+	}
+	return []string{}
+}

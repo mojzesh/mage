@@ -18,6 +18,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"regexp"
 	"text/tabwriter"
 	"time"
 	{{range .Imports}}{{.UniqueName}} "{{.Path}}"
@@ -25,6 +26,7 @@ import (
 )
 
 func main() {
+
 	// Use local types and functions in order to avoid name conflicts with additional magefiles.
 	type arguments struct {
 		Verbose       bool          // print out log statements
@@ -38,7 +40,7 @@ func main() {
 		val := os.Getenv(env)
 		if val == "" {
 			return false
-		}		
+		}
 		b, err := strconv.ParseBool(val)
 		if err != nil {
 			log.Printf("warning: environment variable %s is not a valid bool value: %v", env, val)
@@ -51,7 +53,7 @@ func main() {
 		val := os.Getenv(env)
 		if val == "" {
 			return 0
-		}		
+		}
 		d, err := time.ParseDuration(val)
 		if err != nil {
 			log.Printf("warning: environment variable %s is not a valid duration value: %v", env, val)
@@ -92,7 +94,7 @@ Options:
 		fs.Usage()
 		return
 	}
-	  
+
 	list := func() error {
 		{{with .Description}}fmt.Println(` + "`{{.}}\n`" + `)
 		{{- end}}
@@ -214,11 +216,45 @@ Options:
 	}
 
 	var unknown []string
+	var prevTarget string
+	var filteredTargets = []string{}
+	var perTargetFlagsMap = make(map[string][]string)
+	var argLow string
+	re := regexp.MustCompile(` + "`" + `(^-{1,2}\w+\=\S*)|(^-{1,2}\w+$)` + "`" + `)
 	for _, arg := range args.Args {
-		if !targets[strings.ToLower(arg)] {
-			unknown = append(unknown, arg)
+		// don't process any more arguments if you detect '--' chars
+		if arg == "--" {
+			break
+		}
+		// convert alias to full target name
+		switch strings.ToLower(arg) {
+		{{range $alias, $func := .Aliases}}
+			case "{{lower $alias}}":
+				arg = "{{$func.TargetName}}"
+		{{- end}}
+		}
+		argLow = strings.ToLower(arg)
+		if !targets[argLow] {
+			//-----------------------------------------------------------------------------
+			// Add to unknown targets only if arg is not matching above regex pattern e.g:
+			// --                                          : stop processing any more arguments
+			// -f --f -flag --flag                         : boolean flags only
+			// -f=value --f=value -flag=value --flag=value : boolean, integer, string flags
+			//-----------------------------------------------------------------------------
+			if re.FindString(arg) == "" {
+				unknown = append(unknown, arg)
+			}
+			perTargetFlagsMap[prevTarget] = append(perTargetFlagsMap[prevTarget], arg)
+		} else {
+			// target is always first, then args follows
+			prevTarget = argLow
+			filteredTargets = append(filteredTargets, argLow)
 		}
 	}
+
+	// all ok, save filtered targets names
+	args.Args = filteredTargets
+
 	if len(unknown) == 1 {
 		logger.Println("Unknown target specified:", unknown[0])
 		os.Exit(2)
