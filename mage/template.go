@@ -227,13 +227,15 @@ Options:
 			break
 		}
 		// convert alias to full target name
-		switch strings.ToLower(arg) {
+		aliasKebabSnaked := strings.ReplaceAll(arg, "-", "_")
+		switch strings.ToLower(aliasKebabSnaked) {
 		{{range $alias, $func := .Aliases}}
 			case "{{lower $alias}}":
 				arg = "{{$func.TargetName}}"
 		{{- end}}
 		}
-		argLow = strings.ToLower(arg)
+		argKebabSnaked := strings.ReplaceAll(arg, "-", "_")
+		argLow = strings.ToLower(argKebabSnaked)
 		if !targets[argLow] {
 			//-----------------------------------------------------------------------------
 			// Add to unknown targets only if arg is not matching above regex pattern e.g:
@@ -269,7 +271,8 @@ Options:
 			logger.Println("no target specified")
 			os.Exit(1)
 		}
-		switch strings.ToLower(args.Args[0]) {
+		args0KebabSnaked := strings.ReplaceAll(args.Args[0], "-", "_")
+		switch strings.ToLower(args0KebabSnaked) {
 			{{range .Funcs}}case "{{lower .TargetName}}":
 				fmt.Print("{{$.BinaryName}} {{lower .TargetName}}:\n\n")
 				{{if ne .Comment "" -}}
@@ -314,13 +317,15 @@ Options:
 	{{- end}}
 	}
 	for _, target := range args.Args {
-		switch strings.ToLower(target) {
+		targetKebabSnaked := strings.ReplaceAll(target, "-", "_")
+		switch strings.ToLower(targetKebabSnaked) {
 		{{range $alias, $func := .Aliases}}
 			case "{{lower $alias}}":
 				target = "{{$func.TargetName}}"
 		{{- end}}
 		}
-		switch strings.ToLower(target) {
+		targetKebabSnaked = strings.ReplaceAll(target, "-", "_")
+		switch strings.ToLower(targetKebabSnaked) {
 		{{range .Funcs }}
 			case "{{lower .TargetName}}":
 				if args.Verbose {
