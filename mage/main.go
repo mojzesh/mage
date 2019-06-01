@@ -18,10 +18,10 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/magefile/mage/internal"
-	"github.com/magefile/mage/mg"
-	"github.com/magefile/mage/parse"
-	"github.com/magefile/mage/sh"
+	"github.com/mojzesh/mage/internal"
+	"github.com/mojzesh/mage/mg"
+	"github.com/mojzesh/mage/parse"
+	"github.com/mojzesh/mage/sh"
 )
 
 // magicRebuildKey is used when hashing the output binary to ensure that we get

@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/magefile/mage/mage"
+	"github.com/mojzesh/mage/mage"
 )
 
 func main() {

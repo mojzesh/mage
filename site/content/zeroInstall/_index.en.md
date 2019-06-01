@@ -22,7 +22,7 @@ package main
 
 import (
 	"os"
-	"github.com/magefile/mage/mage"
+	"github.com/mojzesh/mage/mage"
 )
 
 func main() { os.Exit(mage.Main()) }
@@ -39,13 +39,13 @@ a `required` clause in `Gopkg.toml` to prevent it being subsequently removed due
 perceived use thanks for the `+build ignore` tag - for example:
 
 ```toml
-required = ["github.com/magefile/mage/mage"]
+required = ["github.com/mojzesh/mage/mage"]
 ```
 
 ## Use Mage as a library
 
 All of mage's functionality is accessible as a compile-in library.  Checkout
-[godoc.org/github.com/magefile/mage/mage](https://godoc.org/github.com/magefile/mage/mage)
+[godoc.org/github.com/mojzesh/mage/mage](https://godoc.org/github.com/mojzesh/mage/mage)
 for full details.
 
 Fair warning, the API of mage/mage may change, so be sure to use vendoring.

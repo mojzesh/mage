@@ -21,8 +21,8 @@ mage targets in the current directory.
 This will download the mage source and install it (if you're using a gopath):
 
 ```plain
-go get -d github.com/magefile/mage
-go run $GOPATH/src/github.com/magefile/mage/bootstrap.go install
+go get -d github.com/mojzesh/mage
+go run $GOPATH/src/github.com/mojzesh/mage/bootstrap.go install
 ```
 
 If you're using go modules, you can do it with good old git clone:

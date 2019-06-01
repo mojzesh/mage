@@ -1,13 +1,13 @@
 project_name: mage
 release:
   github:
-    owner: magefile
+    owner: mojzesh
     name: mage
   draft: true
 build:
   binary: mage
   main: .
-  ldflags: -s -w -X github.com/magefile/mage/mage.timestamp={{.Date}} -X github.com/magefile/mage/mage.commitHash={{.Commit}} -X github.com/magefile/mage/mage.gitTag={{.Version}}
+  ldflags: -s -w -X github.com/mojzesh/mage/mage.timestamp={{.Date}} -X github.com/mojzesh/mage/mage.commitHash={{.Commit}} -X github.com/mojzesh/mage/mage.gitTag={{.Version}}
   goos:
     - darwin
     - linux

@@ -5,7 +5,7 @@ package main
 import (
 	"os"
 
-	"github.com/magefile/mage/mage"
+	"github.com/mojzesh/mage/mage"
 )
 
 // This is a bootstrap builder, to build mage when you don't already *have* mage.

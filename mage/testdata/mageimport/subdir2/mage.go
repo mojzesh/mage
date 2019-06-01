@@ -3,7 +3,7 @@ package mage
 import (
 	"fmt"
 
-	"github.com/magefile/mage/mg"
+	"github.com/mojzesh/mage/mg"
 )
 
 // BuildSubdir2 Builds stuff.

@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/magefile/mage/mg"
+	"github.com/mojzesh/mage/mg"
 )
 
 var Default = NS.Error

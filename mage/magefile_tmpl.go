@@ -9,7 +9,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/magefile/mage/mg" // mg contains helpful utility functions, like Deps
+	"github.com/mojzesh/mage/mg" // mg contains helpful utility functions, like Deps
 )
 
 // Default target to run when none is specified
