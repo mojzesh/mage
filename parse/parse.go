@@ -89,6 +89,10 @@ func (f Function) ExecCode() (string, error) {
 	if f.Package != "" {
 		name = f.Package + "." + name
 	}
+	if f.PkgAlias != "" {
+		cliName = f.PkgAlias + ":" + cliName
+	}
+
 	cliName = strings.ToLower(cliName)
 
 	if f.IsContext && f.IsError {
